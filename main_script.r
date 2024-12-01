@@ -1,6 +1,3 @@
-# TODO
-# BLOCK CV find sweet spot for block size and number of fold, need to add in buffer size array
-
 # Load the necessary libraries
 library(ranger)
 library(caret)
