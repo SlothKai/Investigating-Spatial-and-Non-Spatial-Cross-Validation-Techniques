@@ -16,6 +16,8 @@ block_method <- c("random", "snake", "continuous")
 evaluate_with_blocked_cv <- function(spatial_X, spatial_y, validation_X, validation_y, tune_grid, range, dataset, fold_array, block_size, coords_cols, scene) {
     # Convert train and test data to sf objects
     cat("Converting data to sf objects...\n")
+
+    # crs = 3857 is the Web Mercator projection
     train_X_sf <- st_as_sf(spatial_X, coords = coords_cols, crs = 3857)
 
     results <- data.frame(
@@ -35,6 +37,7 @@ evaluate_with_blocked_cv <- function(spatial_X, spatial_y, validation_X, validat
         MAPE_Validation = numeric(),
         BIAS_Validation = numeric()
     )
+
     # Detect the number of CPU cores and set up a parallel backend
     num_cores <- parallel::detectCores()
     cat("Setting up parallel processing with", num_cores, "cores...\n")

@@ -47,7 +47,6 @@ evaluate_with_spatial_k_folds <- function(spatial_X, spatial_y, validation_X, va
         # Set up spatial cross-validation using the sf object
         spatial_folds <- spatial_clustering_cv(train_X_sf, v = fold) # Create spatial folds
 
-
         # Ensure that both `in_id` and `out_id` are properly initialized
         for (i in seq_along(spatial_folds$splits)) {
             if (is.null(spatial_folds$splits[[i]]$out_id) || is.na(spatial_folds$splits[[i]]$out_id)) {

@@ -37,6 +37,9 @@ evaluate_with_blockedBuff_cv <- function(spatial_X, spatial_y, validation_X, val
         R_Squared_Validation = numeric(),
         MAPE_Validation = numeric(),
         BIAS_Validation = numeric(),
+        # Track the number of training points, reason for this is that I've encountered cases where
+        # there were no more training points left due to the buffer zone. Tracking the points helps to
+        # understand the reason for the error, as well as the number of training points used in the model.
         Analysis_Size = integer(), # Track the number of training points
         Assessment_Size = integer(), # Track the number of test points
         Buffer_Size = integer() # Track the number of buffer points
