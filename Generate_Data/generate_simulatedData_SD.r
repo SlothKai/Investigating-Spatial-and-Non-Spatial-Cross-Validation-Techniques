@@ -98,7 +98,9 @@ for (range in range_array) {
         non_spatial_train <- paste("simulated_data/non_spatial/sd/train_", range, "_", dataset, ".csv", sep = "")
         non_spatial_test <- paste("simulated_data/non_spatial/sd/test_", range, "_", dataset, ".csv", sep = "")
 
-        # Write data into CSV file. All formats are in whatItIs_variogramRange_datasetNumber
+        # Write data into CSV file.
+        # Naming convention in type_variogramRange_datasetNumber,
+        #   where type is either complete,test or train
         write.csv(landscape_data, spatial_file, row.names = FALSE)
 
         # Write train_data to a CSV file

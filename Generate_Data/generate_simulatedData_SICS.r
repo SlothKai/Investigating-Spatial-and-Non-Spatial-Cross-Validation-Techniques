@@ -12,7 +12,7 @@ number_of_Dataset <- 50
 
 # Number of points for training and test sets
 n_train <- 2000 # Number of training points
-n_test <- 500 # Number of test points in region 1
+n_test <- 500 # Number of test points
 
 # Define Gaussian variogram model for spatial dependence
 sill <- 1.0 # Total variance (sill = partial sill + nugget)
@@ -106,4 +106,5 @@ for (range in range_array) {
     }
 }
 
+# Output result of KS test to ensure covariate shift
 write.csv(results, "SICS_KS_Test.csv", row.names = FALSE)

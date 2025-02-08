@@ -12,7 +12,7 @@ number_of_Dataset <- 50
 
 # Number of points for training and test sets
 n_train <- 2000 # Number of training points
-n_test <- 500 # Number of test points in region 1
+n_test <- 500 # Number of test points
 
 # Define Gaussian variogram model for spatial dependence
 sill <- 1.0 # Total variance (sill = partial sill + nugget)
@@ -53,6 +53,7 @@ for (range in range_array) {
             lon_train <- runif(n_train, min = 0, max = 22.5)
             lon_test <- runif(n_test, min = 27.5, max = 50)
         } else {
+            # autocorrelation range = 12
             # Separation of 11 units, 1 unit of correlation
             lon_train <- runif(n_train, min = 0, max = 19.5)
             lon_test <- runif(n_test, min = 30.5, max = 50)
@@ -107,15 +108,15 @@ for (range in range_array) {
 
         # Check for CS and induce CS if necessary
         # Assume train_data and test_data are data frames with the same features
+        # Features to check for covariate shift
         features <- setdiff(colnames(train_data), c("lat", "lon", "X", "set", "z", "x4", "x5", "x6"))
-        # print(features)
 
         # Adjust significance level for multiple comparisons (number of predictors) using Bonferroni correction
         alpha <- 0.05 / length(features)
 
         for (feature_name in features) {
             ks_test <- ks.test(train_data[[feature_name]], test_data[[feature_name]])
-            # print(ks_test)
+
             # Continue adjusting until KS test p-value is below alpha
             while (ks_test$p.value > alpha) {
                 # Example adjustments: you can modify this logic as needed
@@ -163,4 +164,5 @@ for (range in range_array) {
     }
 }
 
+# Output result of KS test to ensure covariate shift
 write.csv(results, "SDCD_KS_Test.csv", row.names = FALSE)
