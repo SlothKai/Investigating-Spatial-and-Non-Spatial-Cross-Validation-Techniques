@@ -32,6 +32,7 @@ results_K <- data.frame(
   MAPE_Validation = numeric(),
   BIAS_Validation = numeric()
 )
+
 results_Boot <- data.frame(
   Range = integer(),
   Dataset = integer(),
@@ -144,7 +145,6 @@ for (scene in scenarios) {
   for (range in range_array) {
     cat("Range: ", range, "...\n")
     validation_set <- paste("simulated_data/validation_", scene, range, ".csv", sep = "")
-    print(validation_set)
     validation_data <- invisible(read.csv(validation_set))
     validation_X <- validation_data[, -which(names(validation_data) == "z")]
     validation_y <- validation_data$z
@@ -155,9 +155,6 @@ for (scene in scenarios) {
     } else {
       block_size <- range
     }
-
-    # Print out the block size
-    # print(paste("Block size is:", block_size))
 
     for (dataset in 1:number_of_Dataset) {
       cat(" Dataset: ", dataset, "...\n")
@@ -211,7 +208,9 @@ for (scene in scenarios) {
 
         # Run the evaluation with Buffered CV
         temp_results_BlockedBuffCV <- evaluate_with_blockedBuff_cv(spatial_X, spatial_y, validation_X, validation_y, tune_grid, range, dataset, folds_array, block_size, coords_cols, scene)
+
         # Record results
+        # Add scenario and features to the results, ensuring completeness of information
         temp_results_K$Scenario <- paste(scene, collapse = ", ")
         temp_results_K$Features <- paste(features_to_include, collapse = ", ")
         temp_results_Boot$Scenario <- paste(scene, collapse = ", ")
@@ -225,6 +224,7 @@ for (scene in scenarios) {
         temp_results_BlockedBuffCV$Scenario <- paste(scene, collapse = ", ")
         temp_results_BlockedBuffCV$Features <- paste(features_to_include, collapse = ", ")
 
+        # Append the results to the main data frame of each specific technique
         results_K <- rbind(results_K, temp_results_K)
         results_Boot <- rbind(results_Boot, temp_results_Boot)
         results_IWCV <- rbind(results_IWCV, temp_results_IWCV)
